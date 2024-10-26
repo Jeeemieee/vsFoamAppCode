@@ -16,3 +16,5 @@ echo
 echo Removing $DIR files.
 # Remove vsFoamAppCode directory
 rm -rf $DIR
+
+echo
