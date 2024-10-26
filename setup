@@ -1,20 +1,37 @@
 #!/bin/bash
 
+# Exit immediately if a command exits with a non-zero status
+set -e  
+
 ### Inform user and move ".vscode" directory into parent directory ###
 echo
 # Get setup directory and parent directory names
 DIR=$(cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd)
 PARENT="${DIR%/*}"
 # Inform user
-echo Moving .vscode directory to $PARENT directory.
-# Move .vscode
-mv $DIR/.vscode $PARENT
+echo "Moving .vscode directory to $PARENT."
+# Move .vscode if it exists
+if [ -d "$DIR/.vscode" ]; then
+    mv "$DIR/.vscode" "$PARENT"
+else
+    echo "Warning: .vscode directory does not exist in $DIR."
+fi
 
 ### Inform user and remove vsFoamAppCode directory ###
 echo
 # Inform user
-echo Removing $DIR files.
-# Remove vsFoamAppCode directory
-rm -rf $DIR
+echo "Removing $DIR"
+# Confirm before deletion
+read -p "Are you sure you want to remove $DIR? (Y/n): " input
+if [[ "$input" == "n" ]]; then
+    echo "Removal of $DIR has been canceled."
+else
+    rm -rf "$DIR"
+    echo "$DIR has been removed."
+fi
 
+### Finalize user information ###
+echo
+# Inform user
+echo "vsFoamAppCode installation was succesful, don't forget to load the desired openfoam environment before opening the solver files in vscode."
 echo
