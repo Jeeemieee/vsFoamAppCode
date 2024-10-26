@@ -1,0 +1,18 @@
+#!/bin/bash
+
+### Inform user and move ".vscode" directory into parent directory ###
+echo
+# Get setup directory and parent directory names
+DIR=$(cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd)
+PARENT="${DIR%/*}"
+# Inform user
+echo Moving .vscode directory to $PARENT directory.
+# Move .vscode
+mv $DIR/.vscode $PARENT
+
+### Inform user and remove vsFoamAppCode directory ###
+echo
+# Inform user
+echo Removing $DIR files.
+# Remove vsFoamAppCode directory
+rm -rf $DIR
