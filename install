@@ -9,18 +9,19 @@ echo
 DIR=$(cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd)
 PARENT="${DIR%/*}"
 # Inform user
-echo "Copying .vscode directory to $PARENT."
+echo "Copying .vscode directory into $PARENT/."
 # Move .vscode if it exists
 if [ -d "$DIR/.vscode" ]; then
     cp -rf "$DIR/.vscode" "$PARENT"
 else
-    echo "Warning: .vscode directory does not exist in $DIR."
+    echo "Error: The .vscode directory not found in $DIR."
+    exit 1
 fi
 
 ### Inform user and remove vsFoamAppCode directory ###
 echo
 # Inform user
-read -p "Do you want to remove the vsFoamAppCode directory? (Y/n): " input
+read -p "Do you want to remove the vsFoamAppCode source directory? [Y/n]: " input
 # Confirm before deletion
 if [[ "$input" == "n" ]]; then
     echo "Skipping removal of $DIR."
